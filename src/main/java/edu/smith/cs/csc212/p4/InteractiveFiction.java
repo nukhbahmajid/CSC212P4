@@ -17,8 +17,8 @@ public class InteractiveFiction {
 		// This is a text input source (provides getUserWords() and confirm()).
 		TextInput input = TextInput.fromArgs(args);
 
-		// This is the game we're playing.
-		GameWorld game = new SpookyMansion();
+		// This is the game we're playing. CAN CHANGE FROM SPOOKY MANSION. 
+		GameWorld game = new BassHall();
 		
 		// This is the current location of the player (initialize as start).
 		// Maybe we'll expand this to a Player object.
@@ -57,13 +57,19 @@ public class InteractiveFiction {
 			// Get the word they typed as lowercase, and no spaces.
 			String action = words.get(0).toLowerCase().trim();
 			
-			if (action.equals("quit")) {
+			// search for exits in this place on user's command
+			if(action.equals("search")) {
+				here.search();
+			}
+			
+			if (action.equals("quit") || action.equals("q") || action.equals("escape")) {
 				if (input.confirm("Are you sure you want to quit?")) {
 					break;
 				} else {
 					continue;
 				}
 			}
+			
 			
 			// From here on out, what they typed better be a number!
 			Integer exitNum = null;

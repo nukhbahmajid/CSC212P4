@@ -77,7 +77,16 @@ public class Place {
 	 * @return all the exits from this place.
 	 */
 	public List<Exit> getVisibleExits() {
-		return Collections.unmodifiableList(exits);
+		List<Exit> output = new ArrayList<>();
+		for (Exit e : this.exits) {
+			
+		    if (e.isSecret()) {
+		      // don't show to player
+		    } else {
+		      output.add(e);
+		    }
+		  }
+		 return output;
 	}
 	
 	/**
@@ -123,5 +132,24 @@ public class Place {
 		}
 		return false;
 	}
+	
+	/**
+	 * Search for any secret exits related to this place. Hidden exits get revealed. 
+	 */
+	public void search() {
+		for (Exit e : this.exits) {
+			if (e instanceof SecretExit) {
+				SecretExit exit = (SecretExit) e;
+				if (exit.isSecret()) {
+					exit.search();
+					System.out.println("Aha! Found a secret exit!");
+				}
+			}
+		}
+	}
+
+	
+	
+	
 	
 }

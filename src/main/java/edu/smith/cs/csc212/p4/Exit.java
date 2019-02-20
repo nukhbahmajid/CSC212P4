@@ -17,6 +17,7 @@ public class Exit {
 	 */
 	private String target;
 	
+	
 	/**
 	 * Create a new Exit.
 	 * @param target - where it goes.
@@ -25,6 +26,13 @@ public class Exit {
 	public Exit(String target, String description) {
 		this.description = description;
 		this.target = target;
+	}
+	
+	/**
+	 * A boolean getter to know whether the exit is hidden.
+	 */
+	public boolean isSecret() {
+		return false;
 	}
 	
 	/**

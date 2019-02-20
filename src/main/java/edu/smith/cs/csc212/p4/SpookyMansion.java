@@ -36,11 +36,13 @@ public class SpookyMansion implements GameWorld {
 						"You get the sense a secret is nearby, but you only see the stairs you came from."
 						));
 		basement.addExit(new Exit("entranceHall", "There are stairs leading up."));
+		basement.addExit(new Exit("escapeHatch", "There's a rope dangling from the ceiling..?"));
 
 		Place attic = insert(Place.create("attic",
 				"Something rustles in the rafters as you enter the attic. Creepy.\n" + "It's big up here."));
 		attic.addExit(new Exit("entranceHall", "There are stairs leading down."));
 		attic.addExit(new Exit("attic2", "There is more through an archway"));
+		attic.addExit(new Exit("holeInRoof", "You see light seeping in, illuminating a ladder."));
 
 		Place attic2 = insert(Place.create("attic2", "There's definitely a bat in here somewhere.\n"
 				+ "This part of the attic is brighter, so maybe you're safe here."));
@@ -57,6 +59,10 @@ public class SpookyMansion implements GameWorld {
 		
 		Place secretRoom = insert(Place.create("secretRoom", "You have found the secret room."));
 		secretRoom.addExit(new Exit("hallway0", "There is a long hallway."));
+		secretRoom.addExit(new Exit("basement", "There is creepy looking staircase going down..."));
+		
+		Place escapeHatch = insert(Place.create("escapeHatch", "You see an escape hatch. \nNo matter how hard you push, it doesn't budge. Seems like you'll be trapped here forever..."));
+		escapeHatch.addExit(new Exit("basement","There is no other way than climbing down the rope to the dingy basement..."));
 		
 		int hallwayDepth = 5;
 		int lastHallwayPart = hallwayDepth - 1;
@@ -77,6 +83,11 @@ public class SpookyMansion implements GameWorld {
 		Place crypt = insert(Place.terminal("crypt", "You have found the crypt.\n"
 				+"It is scary here, but there is an exit to outside.\n"+
 				"Maybe you'll be safe out there."));
+		
+		/** 
+		 * additional "room" that the player reaches to form the attic
+		 */
+		Place holeInRoof = insert(Place.terminal("holeInRoof", "A hole in the roof! An escape...not the best of sorts...should you jump down to get out of this hell...?"));
 		
 		// Make sure your graph makes sense!
 		checkAllExitsGoSomewhere();
