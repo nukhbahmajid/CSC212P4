@@ -22,7 +22,7 @@ public class BassHall implements GameWorld{
 	/**
 	 * The items that the user has collected. 
 	 */
-	private List<String> stuff = new ArrayList<String>();
+	public List<String> stuff = new ArrayList<String>();
 	
 	
 	/** 
@@ -41,7 +41,7 @@ public class BassHall implements GameWorld{
 				"You instantly recognize this place - it's the entrance hallway of the damned Bass Hall.\nThe door out should no longer work for you till you get your shit together for finals.\n"));
 		entranceHall.addExit(new Exit("hallway", 
 				"You see a hallway on your left. Enter the hallway."));
-		entranceHall.addExit(new Exit("youngLibrary", "You sense a familiar place. This is a trap...you know it! Why are you trying to go here??"));
+		entranceHall.addExit(new LockedExit("youngLibrary", "You sense a familiar place. This is a trap...you know it! Why are you trying to go here??"));
 		entranceHall.addExit(new Exit("elevator", "There's an elevator to your right."));
 		entranceHall.addExit(new Exit("bathrooms", "There's a door right next to the elevator."));
 		
@@ -49,7 +49,7 @@ public class BassHall implements GameWorld{
 		
 		Place hallway = insert(Place.create("hallway", "Clearly psych department has done an outstanding job in simulating a psych ward's gloomy hallways."));
 		hallway.addExit(new Exit("entranceHall", "Retreat back to the entrance hall."));
-		hallway.addExit(new Exit("jordansOffice", "You have an epiphany. Your head's a lot clearer now. Perhaps, you're headed in the right direction. Go on?"));
+		hallway.addExit(new LockedExit("jordansOffice", "You have an epiphany. Your head's a lot clearer now. Perhaps, you're headed in the right direction. Go on?"));
 		hallway.hasKeys = true;
 		hallway.putKey("OneCard");
 		
@@ -73,8 +73,8 @@ public class BassHall implements GameWorld{
 		
 		
 		
-		Place specialCollections = insert(Place.create("specialCollections", "This is the special collections room.\n" +  "You clearly don't belong here!\n" + "You haven't taken a non-STEM class in your life!\n"
-				+ "EDIT HERE - ONE WAY: There's no way back."));
+		Place specialCollections = insert(Place.create("specialCollections", "This is the special collections room.\n" +  "You clearly don't belong here!\n" + "You haven't taken a non-STEM class in your life!\n"));
+		specialCollections.addExit(new LockedExit("youngLibrary", "Take the stairs down back to Young Library main floor"));
 		specialCollections.hasKeys = true;
 		specialCollections.putKey("Laptop"); 
 		

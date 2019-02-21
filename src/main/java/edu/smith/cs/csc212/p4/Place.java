@@ -189,8 +189,3 @@ public class Place {
 	
 }
 
-	
-	
-	
-	
-

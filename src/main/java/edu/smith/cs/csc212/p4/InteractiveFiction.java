@@ -27,6 +27,9 @@ public class InteractiveFiction {
 		// Play the game until quitting.
 		// This is too hard to express here, so we just use an infinite loop with breaks.
 		while (true) {
+			
+			// Give the player a hint that they should search the places. 
+			System.out.println("Heads-Up: When in doubt, always search the places for hidden exits!\nType \"search\" and hit enter to reveal any secret exits if present!\n");
 			// Print the description of where you are.
 			Place here = game.getPlace(place);
 			System.out.println(here.getDescription());
@@ -119,9 +122,30 @@ public class InteractiveFiction {
 				continue;
 			}
 
-			// Move to the room they indicated.
+			// Move to the room they indicated. If it is a locked exit, see if you have the "stuff" for it. 
 			Exit destination = exits.get(exitNum);
-			place = destination.getTarget();
+			if (destination instanceof LockedExit) {
+				BassHall bass = (BassHall) game;
+				if (destination.getTarget() == "youngLibrary") {
+					if(bass.stuff.contains("OneCard")) {
+						place = destination.getTarget();
+					} else {
+						System.out.println("\nYou do not have item \"OneCard\" required to enter this place.\n");
+					}
+				}
+				if (destination.getTarget() == "jordansOffice") {
+					if(bass.stuff.contains("Laptop")) {
+						place = destination.getTarget();
+					} else {
+						System.out.println("\nYou do not have item \"Laptop\" required to enter this place.\n");
+					}
+				}
+			} else {
+				place = destination.getTarget();
+			}
+			
+			
+			
 		}
 
 		// You get here by "quit" or by reaching a Terminal Place.
