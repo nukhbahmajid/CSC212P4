@@ -1,11 +1,29 @@
 package edu.smith.cs.csc212.p4;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BassHall implements GameWorld{
 	
 	private Map<String, Place> places = new HashMap<>();
+	
+	/**
+	 * The values isolated from the map, into a values list of data type Place
+	 */
+	private List<Place> placesList = new ArrayList<>(); 
+	
+	/**
+	 * Get all the item keys from ALL the places
+	 */
+	private List<String> allKeys = new ArrayList<String>();
+	
+	/**
+	 * The items that the user has collected. 
+	 */
+	private List<String> stuff = new ArrayList<String>();
+	
 	
 	/** 
 	 * Where should the player start? 
@@ -16,6 +34,8 @@ public class BassHall implements GameWorld{
 	}
 	
 	public BassHall() {
+		
+		
 		
 		Place entranceHall = insert(Place.create("entranceHall",
 				"You instantly recognize this place - it's the entrance hallway of the damned Bass Hall.\nThe door out should no longer work for you till you get your shit together for finals.\n"));
@@ -30,11 +50,13 @@ public class BassHall implements GameWorld{
 		Place hallway = insert(Place.create("hallway", "Clearly psych department has done an outstanding job in simulating a psych ward's gloomy hallways."));
 		hallway.addExit(new Exit("entranceHall", "Retreat back to the entrance hall."));
 		hallway.addExit(new Exit("jordansOffice", "You have an epiphany. Your head's a lot clearer now. Perhaps, you're headed in the right direction. Go on?"));
+		hallway.hasKeys = true;
+		hallway.putKey("OneCard");
 		
 		
 		
 		Place youngLibrary = insert(Place.create("youngLibrary", "It's Young Library." +
-		" This place has been your makeshift home for several nights through all these Smith years."));
+		" This place has been your makeshift home for several nights through all these Smith years. \n" + "...Something feels off"));
 		youngLibrary.addExit(new Exit("entranceHall", "Retreat back to the entrance hall."));
 		youngLibrary.addExit(new SecretExit("specialCollections", "A secluded door inside the library beckons you. Perhaps this is not the best time to be distracted..?"));
 		
@@ -51,18 +73,34 @@ public class BassHall implements GameWorld{
 		
 		
 		
-		Place readingRoom = insert(Place.create("readingRoom", "Oh no. This is the reading room. All your friends are here, and you'll end up talking for hours. " +"Get out of here!\n"));
-		
-		
-		
-		
 		Place specialCollections = insert(Place.create("specialCollections", "This is the special collections room.\n" +  "You clearly don't belong here!\n" + "You haven't taken a non-STEM class in your life!\n"
-		+ "EDIT HERE - ONE WAY: There's no way back."));
+				+ "EDIT HERE - ONE WAY: There's no way back."));
+		specialCollections.hasKeys = true;
+		specialCollections.putKey("Laptop"); 
 		
+		
+		
+		// lead by a one way path. it is a dead end. can't go back. game over
+		Place readingRoom = insert(Place.terminal("readingRoom", "Oh no. This is the reading room.\nAll your friends are here, and you end up talking for hours. \n" + 
+		"Wallow in self-loathing!!!\nNothing can save you from finals now!"));
+		
+		// game over, you win. 
 		Place jordansOffice = insert(Place.terminal("jordansOffice", "You've reached Jordan's Office!\n" + "CSC250 is hard, but at least there's hope now!\n" + "Let's get done with finals once and for all!"));
 		
 		
 		checkAllExitsGoSomewhere();
+		
+		for (Map.Entry<String, Place> place : places.entrySet()) {
+			placesList.add(place.getValue());
+		}
+		
+		for (Place eachPlace : placesList) {
+			for (int i = 0; i < eachPlace.getKeys().size(); i++) {
+				List<String> keysFromPlace = eachPlace.getKeys();
+				allKeys.add(keysFromPlace.get(i));
+			}
+		}	
+		
 		
 	}
 	
@@ -102,6 +140,15 @@ public class BassHall implements GameWorld{
 	@Override
 	public Place getPlace(String id) {
 		return this.places.get(id);
+	}
+	
+	
+	/**
+	 * Method prompted by user input to collect the key items found in the space
+	 */
+	public List<String> stuff(String placeid) {
+		stuff.addAll(this.places.get(placeid).getKeys());
+		return stuff;
 	}
 
 }

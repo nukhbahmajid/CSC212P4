@@ -41,7 +41,17 @@ public class InteractiveFiction {
 			
 			for (int i=0; i<exits.size(); i++) {
 			    Exit e = exits.get(i);
-				System.out.println(" ["+i+"] " + e.getDescription());
+				System.out.println(" ["+i+"] " + e.getDescription());	
+			}
+			
+			// if a certain place has items laying around then show them
+			if (here.hasKeys) {
+				System.out.println("");
+				for(int i = 0; i < here.getKeys().size(); i++) {
+					List<String> theKeys = here.getKeys(); 
+					System.out.println("["+ (i+1) + "]" + " Item found: " + theKeys.get(i)); 
+					
+				}
 			}
 
 			// Figure out what the user wants to do, for now, only "quit" is special.
@@ -59,8 +69,15 @@ public class InteractiveFiction {
 			
 			// search for exits in this place on user's command
 			if(action.equals("search")) {
-				here.search();
+				if(input.confirm("Ready to search the place top-down?")) {
+					here.search();
+					continue;
+				}
 			}
+			
+			// if there are keys in a certain place give the option to the user to retrieve them.
+			// CODE HERE
+			
 			
 			if (action.equals("quit") || action.equals("q") || action.equals("escape")) {
 				if (input.confirm("Are you sure you want to quit?")) {

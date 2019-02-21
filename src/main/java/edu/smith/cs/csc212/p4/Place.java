@@ -2,7 +2,9 @@ package edu.smith.cs.csc212.p4;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This represents a place in our text adventure.
@@ -28,6 +30,17 @@ public class Place {
 	private boolean terminal;
 	
 	/**
+	 * Does this instance of place have keys?
+	 */
+	public boolean hasKeys;
+	
+	/**
+	 *  What are certain keys available in a place? Player should be able to retrieve them using another method. 
+	 */
+	private Map<Place, String> keysInPlaces = new HashMap<>();
+	
+	
+	/**
 	 * Internal only constructor for Place. Use {@link #create(String, String)} or {@link #terminal(String, String)} instead.
 	 * @param id - the internal id of this place.
 	 * @param description - the user-facing description of the place.
@@ -38,6 +51,7 @@ public class Place {
 		this.description = description;
 		this.exits = new ArrayList<>();
 		this.terminal = terminal;
+		this.hasKeys = false;
 	}
 	
 	/**
@@ -142,14 +156,34 @@ public class Place {
 				SecretExit exit = (SecretExit) e;
 				if (exit.isSecret()) {
 					exit.search();
-					System.out.println("Aha! Found a secret exit!");
 				}
 			}
 		}
 	}
+	
+	
+	/**
+	 * Retrieve the list of keys present in this instance of Place
+	 */
+	public List<String> getKeys() {
+		List<String> theKeys = new ArrayList<String>(this.keysInPlaces.values());
+		return theKeys;	
+	}
+	
+	
+	/**
+	 * You should be to add keys to places in the BassHall class
+	 * @param keyItem - the item that is going be to be a key for another place.
+	 */
+	public void putKey(String keyItem) {
+		this.keysInPlaces.put(this, keyItem);
+	}
+	
+	
+}
 
 	
 	
 	
 	
-}
+
