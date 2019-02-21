@@ -50,7 +50,7 @@ public class InteractiveFiction {
 				for(int i = 0; i < here.getKeys().size(); i++) {
 					List<String> theKeys = here.getKeys(); 
 					System.out.println("["+ (i+1) + "]" + " Item found: " + theKeys.get(i)); 
-					
+				System.out.println("If you want to collect them: type \"take\" and hit enter.\n");	
 				}
 			}
 
@@ -76,7 +76,22 @@ public class InteractiveFiction {
 			}
 			
 			// if there are keys in a certain place give the option to the user to retrieve them.
-			// CODE HERE
+			if (action.equals("take")) {
+				if(input.confirm("Are you sure you want to add the item/s to your inventory?")) {
+					BassHall bass = (BassHall) game;
+					bass.getStuff(here.getId());
+					continue;
+				}
+			}
+			
+			// print all the keys that you have in your inventory. 
+			if (action.equals("stuff")) {
+				if(input.confirm("Display the keys in your inventory?")) {
+					BassHall bass = (BassHall) game;
+					bass.printStuff();
+					continue;
+				}
+			}
 			
 			
 			if (action.equals("quit") || action.equals("q") || action.equals("escape")) {

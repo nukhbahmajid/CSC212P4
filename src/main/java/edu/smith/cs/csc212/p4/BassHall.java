@@ -146,9 +146,18 @@ public class BassHall implements GameWorld{
 	/**
 	 * Method prompted by user input to collect the key items found in the space
 	 */
-	public List<String> stuff(String placeid) {
+	public void getStuff(String placeid) {
 		stuff.addAll(this.places.get(placeid).getKeys());
-		return stuff;
+	}
+	
+	/**
+	 * Show all the stuff that you have collected in the game so far 
+	 */
+	public void printStuff() {
+		System.out.println("You have the following key items in your inventory:\n");
+		for (int i = 0; i < this.stuff.size(); i++) {
+			System.out.println("[" + (i+1) + "] " + stuff.get(i));
+		}
 	}
 
 }
