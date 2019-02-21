@@ -35,6 +35,12 @@ public class Place {
 	public boolean hasKeys;
 	
 	/**
+	 * Has the player collected the keys from this place
+	 */
+	public boolean hasCollected; 
+	
+	
+	/**
 	 *  What are certain keys available in a place? Player should be able to retrieve them using another method. 
 	 */
 	private Map<Place, String> keysInPlaces = new HashMap<>();
@@ -52,6 +58,7 @@ public class Place {
 		this.exits = new ArrayList<>();
 		this.terminal = terminal;
 		this.hasKeys = false;
+		this.hasCollected = false;
 	}
 	
 	/**

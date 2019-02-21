@@ -45,14 +45,16 @@ public class InteractiveFiction {
 			}
 			
 			// if a certain place has items laying around then show them
-			if (here.hasKeys) {
+			if (here.hasKeys && (!here.hasCollected)) {
 				System.out.println("");
 				for(int i = 0; i < here.getKeys().size(); i++) {
 					List<String> theKeys = here.getKeys(); 
-					System.out.println("["+ (i+1) + "]" + " Item found: " + theKeys.get(i)); 
-				System.out.println("If you want to collect them: type \"take\" and hit enter.\n");	
-				}
+					System.out.println("["+ (i+1) + "]" + " Item found: " + theKeys.get(i));
+					System.out.println("\nIf you want to collect them: type \"take\" and hit enter.\n");	
+					}
+			
 			}
+			
 
 			// Figure out what the user wants to do, for now, only "quit" is special.
 			List<String> words = input.getUserWords(">");

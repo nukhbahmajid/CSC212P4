@@ -148,6 +148,7 @@ public class BassHall implements GameWorld{
 	 */
 	public void getStuff(String placeid) {
 		stuff.addAll(this.places.get(placeid).getKeys());
+		this.places.get(placeid).hasCollected = true;
 	}
 	
 	/**
