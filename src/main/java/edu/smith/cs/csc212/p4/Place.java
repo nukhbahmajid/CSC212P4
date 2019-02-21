@@ -186,6 +186,5 @@ public class Place {
 		this.keysInPlaces.put(this, keyItem);
 	}
 	
-	
 }
 
