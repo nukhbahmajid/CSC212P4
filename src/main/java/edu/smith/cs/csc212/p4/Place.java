@@ -87,9 +87,19 @@ public class Place {
 	
 	/**
 	 * The narrative description of this place.
+	 * Give a night time description additionally if isNight() is true. 
 	 * @return what we show to a player about this place.
 	 */
-	public String getDescription() {
+	public String getDescription(boolean isNightTime) {
+		if (isNightTime == true) {
+			if(this.getId() == "youngLibrary") {
+				return (this.description + "\nThe night has befallen, and you still haven't managed to get work done!\n");
+			} else if (this.getId() == "entranceHall") {
+				return (this.description + "\nIt's so late already. Might as well go home at this point - but can you?\n");
+			}
+		} else {
+			return this.description;
+		}
 		return this.description;
 	}
 

@@ -20,6 +20,9 @@ public class InteractiveFiction {
 		// This is the game we're playing. CAN CHANGE FROM SPOOKY MANSION. 
 		GameWorld game = new BassHall();
 		
+		// casting game world to be known as a bass hall instance as it is later required in many places
+		BassHall bass = (BassHall) game;
+		
 		// This is the current location of the player (initialize as start).
 		// Maybe we'll expand this to a Player object.
 		String place = game.getStart();
@@ -32,7 +35,7 @@ public class InteractiveFiction {
 			System.out.println("Heads-Up: When in doubt, always search the places for hidden exits!\nType \"search\" and hit enter to reveal any secret exits if present!\n");
 			// Print the description of where you are.
 			Place here = game.getPlace(place);
-			System.out.println(here.getDescription());
+			System.out.println(here.getDescription(bass.gameTimer.isNightTime()));
 
 			// Game over after print!
 			if (here.isTerminalState()) {
@@ -83,7 +86,6 @@ public class InteractiveFiction {
 			// if there are keys in a certain place give the option to the user to retrieve them.
 			if (action.equals("take")) {
 				if(input.confirm("Are you sure you want to add the item/s to your inventory?")) {
-					BassHall bass = (BassHall) game;
 					bass.getStuff(here.getId());
 					continue;
 				}
@@ -92,8 +94,16 @@ public class InteractiveFiction {
 			// print all the keys that you have in your inventory. 
 			if (action.equals("stuff")) {
 				if(input.confirm("Display the keys in your inventory?")) {
-					BassHall bass = (BassHall) game;
 					bass.printStuff();
+					continue;
+				}
+			}
+			
+			// if the player wants to "rest" for a while, keep increment the timer by two hours every time "rest" is the input
+			if (action.equals("rest")) {
+				if(input.confirm("You sure you want to rest?")) {
+					bass.gameTimer.increaseHour();
+					bass.gameTimer.increaseHour();
 					continue;
 				}
 			}
@@ -125,9 +135,9 @@ public class InteractiveFiction {
 			// Move to the room they indicated. If it is a locked exit, see if you have the "stuff" for it. 
 			Exit destination = exits.get(exitNum);
 			if (destination instanceof LockedExit) {
-				BassHall bass = (BassHall) game;
 				if (destination.getTarget() == "youngLibrary") {
 					if(bass.stuff.contains("OneCard")) {
+						bass.gameTimer.increaseHour();
 						place = destination.getTarget();
 					} else {
 						System.out.println("\nYou do not have item \"OneCard\" required to enter this place.\n");
@@ -135,12 +145,14 @@ public class InteractiveFiction {
 				}
 				if (destination.getTarget() == "jordansOffice") {
 					if(bass.stuff.contains("Laptop")) {
+						bass.gameTimer.increaseHour();
 						place = destination.getTarget();
 					} else {
 						System.out.println("\nYou do not have item \"Laptop\" required to enter this place.\n");
 					}
 				}
 			} else {
+				bass.gameTimer.increaseHour();
 				place = destination.getTarget();
 			}
 			
@@ -149,6 +161,7 @@ public class InteractiveFiction {
 		}
 
 		// You get here by "quit" or by reaching a Terminal Place.
+		bass.gameTimer.time();
 		System.out.println(">>> GAME OVER <<<");
 	}
 

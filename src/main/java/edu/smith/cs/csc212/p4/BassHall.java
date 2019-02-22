@@ -23,8 +23,13 @@ public class BassHall implements GameWorld{
 	 * The items that the user has collected. 
 	 */
 	public List<String> stuff = new ArrayList<String>();
+
+	/**
+	 * The game timer that's implementing the GameTime class
+	 */
+	public GameTime gameTimer = new GameTime();
 	
-	
+
 	/** 
 	 * Where should the player start? 
 	 */
@@ -34,8 +39,6 @@ public class BassHall implements GameWorld{
 	}
 	
 	public BassHall() {
-		
-		
 		
 		Place entranceHall = insert(Place.create("entranceHall",
 				"You instantly recognize this place - it's the entrance hallway of the damned Bass Hall.\nThe door out should no longer work for you till you get your shit together for finals.\n"));
@@ -99,7 +102,7 @@ public class BassHall implements GameWorld{
 				List<String> keysFromPlace = eachPlace.getKeys();
 				allKeys.add(keysFromPlace.get(i));
 			}
-		}	
+		}
 		
 		
 	}
@@ -158,7 +161,11 @@ public class BassHall implements GameWorld{
 		System.out.println("You have the following key items in your inventory:\n");
 		for (int i = 0; i < this.stuff.size(); i++) {
 			System.out.println("[" + (i+1) + "] " + stuff.get(i));
+		} if (this.stuff.size() == 0) {
+			System.out.println("Unfortunately, you do not have any keys in your inventory! :(\n");
 		}
 	}
+	
+				
 
 }
